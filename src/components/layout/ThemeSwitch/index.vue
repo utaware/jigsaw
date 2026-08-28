@@ -7,7 +7,9 @@ import { useTheme } from '@/composables/useTheme'
 
 const { isDark, toggleTheme } = useTheme()
 
-const themeTitle = computed(() => (isDark ? '切换至浅色模式' : '切换至深色模式')) 
+const themeTitle = computed(() =>
+  isDark ? '切换至浅色模式' : '切换至深色模式',
+)
 </script>
 
 <template>
@@ -19,11 +21,15 @@ const themeTitle = computed(() => (isDark ? '切换至浅色模式' : '切换至
     :aria-label="themeTitle"
     @click="toggleTheme"
   >
-    <Sun v-if="isDark" class="size-4.5 transition-transform duration-200 rotate-0 hover:rotate-45" />
-    <Moon v-else class="size-4.5 transition-transform duration-200 -rotate-12 hover:rotate-0" />
+    <Sun
+      v-if="isDark"
+      class="size-4.5 transition-transform duration-200 rotate-0 hover:rotate-45"
+    />
+    <Moon
+      v-else
+      class="size-4.5 transition-transform duration-200 -rotate-12 hover:rotate-0"
+    />
   </Button>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

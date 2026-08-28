@@ -6,8 +6,12 @@ import ThemeSwitch from '@/components/layout/ThemeSwitch/index.vue'
 </script>
 
 <template>
-  <header class="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
-    <div class="mx-auto flex h-14 items-center justify-between px-4 sm:px-6 lg:px-8">
+  <header
+    class="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60"
+  >
+    <div
+      class="mx-auto flex h-14 items-center justify-between px-4 sm:px-6 lg:px-8"
+    >
       <div class="flex items-center gap-6">
         <!-- 左侧：标题与主页链接 -->
         <CommonLogo />

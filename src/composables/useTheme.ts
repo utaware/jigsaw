@@ -25,7 +25,9 @@ export function useTheme() {
     if (savedTheme) {
       applyTheme(savedTheme === 'dark')
     } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      const prefersDark = window.matchMedia(
+        '(prefers-color-scheme: dark)',
+      ).matches
       applyTheme(prefersDark)
     }
   }
