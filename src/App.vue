@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import LayoutHeader from '@/components/layout/Header/index.vue'
-import { useTheme } from '@/composables/useTheme'
+import { onMounted } from 'vue'
 
-const { initTheme } = useTheme()
-initTheme()
+import LayoutHeader from '@/components/layout/Header/index.vue'
+import { useThemeStore } from '@/stores/theme'
+
+const themeStore = useThemeStore()
+
+onMounted(() => {
+  themeStore.initTheme()
+})
 </script>
 
 <template>

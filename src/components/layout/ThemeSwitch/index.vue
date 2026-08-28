@@ -3,12 +3,12 @@ import { computed } from 'vue'
 import { Moon, Sun } from 'lucide-vue-next'
 
 import { Button } from '@/components/ui/button'
-import { useTheme } from '@/composables/useTheme'
+import { useThemeStore } from '@/stores/theme'
 
-const { isDark, toggleTheme } = useTheme()
+const themeStore = useThemeStore()
 
 const themeTitle = computed(() =>
-  isDark ? '切换至浅色模式' : '切换至深色模式',
+  themeStore.isDark ? '切换至浅色模式' : '切换至深色模式',
 )
 </script>
 
@@ -19,10 +19,10 @@ const themeTitle = computed(() =>
     class="size-9 rounded-full"
     :title="themeTitle"
     :aria-label="themeTitle"
-    @click="toggleTheme"
+    @click="themeStore.toggleTheme"
   >
     <Sun
-      v-if="isDark"
+      v-if="themeStore.isDark"
       class="size-4.5 transition-transform duration-200 rotate-0 hover:rotate-45"
     />
     <Moon
