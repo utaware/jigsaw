@@ -6,7 +6,7 @@ import {
   createShuffledPieces,
   formatElapsedTime,
   isPuzzleComplete,
-} from './puzzle'
+} from '@/views/Jigsaw/game-play/utils'
 
 interface UsePuzzleGameOptions {
   splitSize: ComputedRef<number>

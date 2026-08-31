@@ -8,7 +8,7 @@ import GameHeader from './components/GameHeader.vue'
 import GameStats from './components/GameStats.vue'
 import PuzzleBoard from './components/PuzzleBoard.vue'
 import ReferencePanel from './components/ReferencePanel.vue'
-import { usePuzzleGame } from './usePuzzleGame'
+import { usePuzzleGame } from './hooks/usePuzzleGame.ts'
 
 const router = useRouter()
 const jigsawStore = useJigsawStore()
