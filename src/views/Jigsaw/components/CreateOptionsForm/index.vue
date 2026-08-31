@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ImageUpload from './ImageUpload.vue'
+import ImageUpload from './ImageUpload/index.vue'
 import ImageSplit from './imageSplit.vue'
 </script>
 
