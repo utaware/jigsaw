@@ -4,9 +4,9 @@ import { useRouter } from 'vue-router'
 
 import { useJigsawStore } from '@/stores/jigsaw'
 
-import OptionsImageUrl from './OptionsImageUrl/index.vue'
-import OptionsSplitSize from './OptionsSplitSize/index.vue'
-import OptionsFooter from './OptionsFooter/index.vue'
+import OptionsImageUrl from './components/OptionsImageUrl/index.vue'
+import OptionsSplitSize from './components/OptionsSplitSize/index.vue'
+import OptionsFooter from './components/OptionsFooter/index.vue'
 
 const router = useRouter()
 const jigsawStore = useJigsawStore()
