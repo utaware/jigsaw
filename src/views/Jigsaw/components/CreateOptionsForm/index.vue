@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import ImageUpload from './ImageUpload/index.vue'
-import ImageSplit from './imageSplit.vue'
+import ImageSplitSize from './ImageSplitSize/index.vue'
 </script>
 
 <template>
   <ImageUpload />
-  <ImageSplit />
+  <ImageSplitSize />
 </template>
 
 <style scoped></style>

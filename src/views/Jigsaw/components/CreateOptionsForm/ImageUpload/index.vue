@@ -62,16 +62,15 @@ function handleImageRotate(direction: 'L' | 'R') {
 </script>
 
 <template>
-  <section class="w-full space-y-4">
+  <section class="w-full flex flex-col gap-6">
     <div
       class="flex min-h-90 w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-lg border border-dashed border-border bg-muted/30 p-6 text-center"
     >
       <!-- 图片裁剪区域 -->
-      <div v-show="jigsawUrl" class="h-90 w-full overflow-hidden rounded-md">
+      <div v-if="jigsawUrl" class="h-90 w-full overflow-hidden rounded-md">
         <VueCropper
           ref="cropperRef"
           :img="jigsawUrl"
-          :wrapper="{ width: 720, height: 360 }"
           :output-size="1"
           output-type="png"
           :info="true"
@@ -88,7 +87,7 @@ function handleImageRotate(direction: 'L' | 'R') {
         />
       </div>
       <!-- 未上传图片提示区域 -->
-      <div v-show="!jigsawUrl" class="space-y-2">
+      <div v-else class="h-90 w-full flex flex-col items-center justify-center">
         <p class="text-sm font-medium text-foreground">还没有上传图片</p>
         <p class="text-sm text-muted-foreground">
           选择一张本地图片后，会直接以 dataUrl 展示在这里。

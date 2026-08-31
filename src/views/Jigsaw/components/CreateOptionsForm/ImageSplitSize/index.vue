@@ -87,7 +87,7 @@ const splitOptions = [
       border-color: var(--ring);
       box-shadow: 0 10px 26px
         color-mix(in oklch, var(--foreground) 8%, transparent);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
     }
 
     &:focus-visible {
