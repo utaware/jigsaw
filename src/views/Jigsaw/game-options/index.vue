@@ -4,9 +4,9 @@ import { useRouter } from 'vue-router'
 
 import { useJigsawStore } from '@/stores/jigsaw'
 
-import ImageUpload from './ImageUpload/index.vue'
-import ImageSplitSize from './ImageSplitSize/index.vue'
-import FormFooter from './FormFooter/index.vue'
+import OptionsImageUrl from './OptionsImageUrl/index.vue'
+import OptionsSplitSize from './OptionsSplitSize/index.vue'
+import OptionsFooter from './OptionsFooter/index.vue'
 
 const router = useRouter()
 const jigsawStore = useJigsawStore()
@@ -29,9 +29,9 @@ const handleStartGame = () => {
 </script>
 
 <template>
-  <ImageUpload @cropped="handleImageChange" />
-  <ImageSplitSize v-model="jigsawStore.gameOptions.splitSize" />
-  <FormFooter :can-start-game="canStartGame" @enter="handleStartGame" />
+  <OptionsImageUrl @cropped="handleImageChange" />
+  <OptionsSplitSize v-model="jigsawStore.gameOptions.splitSize" />
+  <OptionsFooter :can-start-game="canStartGame" @enter="handleStartGame" />
 </template>
 
 <style scoped></style>

@@ -1,11 +1,4 @@
-<script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { Button } from '@/components/ui/button'
-import { useCounterStore } from '@/stores/counter'
-
-const counter = useCounterStore()
-const { count } = storeToRefs(counter)
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <main
@@ -23,9 +16,5 @@ const { count } = storeToRefs(counter)
         shadcn-vue。
       </p>
     </div>
-
-    <Button type="button" @click="counter.increment()"
-      >count is {{ count }}</Button
-    >
   </main>
 </template>
