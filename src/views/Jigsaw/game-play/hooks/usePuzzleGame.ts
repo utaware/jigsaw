@@ -9,9 +9,16 @@ import {
 } from '@/views/Jigsaw/game-play/utils'
 
 interface UsePuzzleGameOptions {
+  /** 当前拼图每行和每列的图块数量。 */
   splitSize: ComputedRef<number>
 }
 
+/**
+ * 管理拼图游戏的计时、图块选择交换、进度及完成状态。
+ *
+ * @param options 游戏运行所需的响应式配置。
+ * @returns 游戏状态以及开始游戏、选择图块等交互方法。
+ */
 export function usePuzzleGame({ splitSize }: UsePuzzleGameOptions) {
   const pieces = ref(createShuffledPieces(splitSize.value))
   const selectedIndex = ref<number | null>(null)
@@ -23,11 +30,13 @@ export function usePuzzleGame({ splitSize }: UsePuzzleGameOptions) {
   const formattedTime = computed(() => formatElapsedTime(elapsedSeconds.value))
   const progress = computed(() => calculateProgress(pieces.value))
 
+  /** 停止当前计时器，并清除计时器引用。 */
   function stopTimer() {
     if (timer) clearInterval(timer)
     timer = undefined
   }
 
+  /** 重置已有计时器并开始累计游戏时间。 */
   function startTimer() {
     stopTimer()
     timer = setInterval(() => {
@@ -35,6 +44,7 @@ export function usePuzzleGame({ splitSize }: UsePuzzleGameOptions) {
     }, 1000)
   }
 
+  /** 重置游戏状态、重新打乱图块并启动计时。 */
   function startGame() {
     pieces.value = createShuffledPieces(splitSize.value)
     selectedIndex.value = null
@@ -44,6 +54,11 @@ export function usePuzzleGame({ splitSize }: UsePuzzleGameOptions) {
     startTimer()
   }
 
+  /**
+   * 处理图块选择；连续选择两个不同图块时交换其棋盘位置。
+   *
+   * @param index 被点击图块在当前棋盘中的位置索引。
+   */
   function selectPiece(index: number) {
     if (isCompleted.value) return
 

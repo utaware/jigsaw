@@ -5,8 +5,8 @@ import { Check, RotateCcw } from 'lucide-vue-next'
 
 import { Button } from '@/components/ui/button'
 
-import type { PuzzlePiece } from '../puzzle'
-import { createPieceStyle } from '../puzzle'
+import type { PuzzlePiece } from '@/views/Jigsaw/game-play/utils'
+import { createPieceStyle } from '@/views/Jigsaw/game-play/utils'
 
 const props = defineProps<{
   pieces: PuzzlePiece[]
@@ -27,6 +27,7 @@ const boardStyle = computed<CSSProperties>(() => ({
   gridTemplateColumns: `repeat(${props.splitSize}, minmax(0, 1fr))`,
 }))
 
+/** 获取指定图块在当前棋盘规格下的背景裁切样式。 */
 function pieceStyle(piece: PuzzlePiece) {
   return createPieceStyle(piece, props.splitSize, props.imageUrl)
 }

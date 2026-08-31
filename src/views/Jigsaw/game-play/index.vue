@@ -27,6 +27,7 @@ const {
   selectPiece,
 } = usePuzzleGame({ splitSize })
 
+/** 返回游戏配置页，允许重新选择图片和难度。 */
 function returnToOptions() {
   router.push({ name: 'game-jigsaw-options' })
 }
