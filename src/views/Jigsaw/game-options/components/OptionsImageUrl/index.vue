@@ -14,7 +14,7 @@ interface CropperInstance {
 }
 // 裁剪配置
 const cropOptions = reactive({
-  size: 240,
+  size: 360,
   rotate: 0,
 })
 
@@ -69,10 +69,11 @@ function handleImageRotate(direction: 'L' | 'R') {
       <!-- 图片裁剪区域 -->
       <div v-if="jigsawUrl" class="h-90 w-full overflow-hidden rounded-md">
         <VueCropper
+          mode="contain"
+          output-type="png"
           ref="cropperRef"
           :img="jigsawUrl"
           :output-size="1"
-          output-type="png"
           :info="true"
           :can-scale="true"
           :auto-crop="true"
