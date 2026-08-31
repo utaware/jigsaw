@@ -50,22 +50,28 @@ function handleImageReset() {
 }
 
 // 处理图片旋转事件
-function handleImageRotate() {
-  cropperRef.value?.rotateRight()
-  cropOptions.rotate = (cropOptions.rotate + 90) % 360
+function handleImageRotate(direction: 'L' | 'R') {
+  if (direction === 'L') {
+    cropperRef.value?.rotateLeft()
+    cropOptions.rotate = (cropOptions.rotate - 90 + 360) % 360
+  } else {
+    cropperRef.value?.rotateRight()
+    cropOptions.rotate = (cropOptions.rotate + 90) % 360
+  }
 }
 </script>
 
 <template>
   <section class="w-full space-y-4">
     <div
-      class="flex min-h-72 w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-lg border border-dashed border-border bg-muted/30 p-6 text-center"
+      class="flex min-h-90 w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-lg border border-dashed border-border bg-muted/30 p-6 text-center"
     >
       <!-- 图片裁剪区域 -->
-      <div v-if="jigsawUrl" class="h-96 w-full overflow-hidden rounded-md">
+      <div v-show="jigsawUrl" class="h-90 w-full overflow-hidden rounded-md">
         <VueCropper
           ref="cropperRef"
           :img="jigsawUrl"
+          :wrapper="{ width: 720, height: 360 }"
           :output-size="1"
           output-type="png"
           :info="true"
@@ -82,7 +88,7 @@ function handleImageRotate() {
         />
       </div>
       <!-- 未上传图片提示区域 -->
-      <div v-else class="space-y-2">
+      <div v-show="!jigsawUrl" class="space-y-2">
         <p class="text-sm font-medium text-foreground">还没有上传图片</p>
         <p class="text-sm text-muted-foreground">
           选择一张本地图片后，会直接以 dataUrl 展示在这里。
