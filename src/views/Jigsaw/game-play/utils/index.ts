@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'vue'
+import { padStart, shuffle, times } from 'lodash-es'
 
 export interface PuzzlePiece {
   /** 图块的稳定标识，用于列表渲染。 */
@@ -8,28 +9,23 @@ export interface PuzzlePiece {
 }
 
 /**
- * 创建指定规格的拼图并使用 Fisher-Yates 算法随机打乱。
+ * 创建指定规格的拼图并随机打乱。
  *
  * @param splitSize 每行和每列的图块数量。
  * @returns 已打乱且不会处于初始完成状态的图块列表。
  */
 export function createShuffledPieces(splitSize: number): PuzzlePiece[] {
-  const pieces = Array.from({ length: splitSize * splitSize }, (_, index) => ({
+  const pieces = times(splitSize * splitSize, index => ({
     id: index,
     sourceIndex: index,
   }))
 
+  let shuffledPieces: PuzzlePiece[]
   do {
-    for (let index = pieces.length - 1; index > 0; index -= 1) {
-      const targetIndex = Math.floor(Math.random() * (index + 1))
-      ;[pieces[index], pieces[targetIndex]] = [
-        pieces[targetIndex],
-        pieces[index],
-      ]
-    }
-  } while (isPuzzleComplete(pieces))
+    shuffledPieces = shuffle(pieces)
+  } while (isPuzzleComplete(shuffledPieces))
 
-  return pieces
+  return shuffledPieces
 }
 
 /**
@@ -68,7 +64,7 @@ export function formatElapsedTime(elapsedSeconds: number): string {
   const minutes = Math.floor(elapsedSeconds / 60)
   const seconds = elapsedSeconds % 60
 
-  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+  return `${padStart(String(minutes), 2, '0')}:${padStart(String(seconds), 2, '0')}`
 }
 
 /**
