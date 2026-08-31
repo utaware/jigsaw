@@ -1,10 +1,23 @@
 <script setup lang="ts">
-const splitOptions = [
-  { icon: '🌱', text: '简单', size: 3 },
-  { icon: '🌿', text: '中等', size: 4 },
-  { icon: '🍃', text: '困难', size: 5 },
-  { icon: '🌳', text: '专家', size: 6 },
-]
+import {
+  type ISplitSizeOption,
+  splitSizeOptions,
+} from '@/stores/jigsaw/options'
+
+const emits = defineEmits<{
+  'update:modelValue': [size: number]
+}>()
+
+const props = defineProps<{
+  modelValue: number
+}>()
+
+const isActive = (option: ISplitSizeOption) => option.size === props.modelValue
+
+// 处理拼图难度选择
+const handleSizeChange = (option: ISplitSizeOption) => {
+  emits('update:modelValue', option.size)
+}
 </script>
 
 <template>
@@ -15,10 +28,12 @@ const splitOptions = [
 
     <div class="option-grid">
       <button
-        v-for="option in splitOptions"
-        :key="option.text"
-        type="button"
+        v-for="option in splitSizeOptions"
         class="option-card flex flex-col"
+        :class="{ active: isActive(option) }"
+        type="button"
+        :key="option.text"
+        @click="handleSizeChange(option)"
       >
         <span class="icon">{{ option.icon }}</span>
         <span class="content">
@@ -83,7 +98,8 @@ const splitOptions = [
       transform 160ms ease,
       background 160ms ease;
 
-    &:hover {
+    &:hover,
+    &.active {
       border-color: var(--ring);
       box-shadow: 0 10px 26px
         color-mix(in oklch, var(--foreground) 8%, transparent);
