@@ -35,7 +35,12 @@ function pieceStyle(piece: PuzzlePiece) {
 
 <template>
   <div class="board-frame">
-    <div class="puzzle-board" :style="boardStyle">
+    <TransitionGroup
+      name="piece"
+      tag="div"
+      class="puzzle-board"
+      :style="boardStyle"
+    >
       <button
         v-for="(piece, index) in pieces"
         :key="piece.id"
@@ -50,7 +55,7 @@ function pieceStyle(piece: PuzzlePiece) {
         :aria-pressed="selectedIndex === index"
         @click="$emit('select', index)"
       />
-    </div>
+    </TransitionGroup>
 
     <div v-if="isCompleted" class="completion-panel" role="status">
       <span class="completion-icon"><Check /></span>
@@ -90,11 +95,12 @@ function pieceStyle(piece: PuzzlePiece) {
 }
 
 .puzzle-piece {
+  position: relative;
   min-width: 0;
   min-height: 0;
   padding: 0;
   border: 0;
-  border-radius: 0;
+  border-radius: calc(var(--radius) / 2);
   background-repeat: no-repeat;
   cursor: pointer;
   transition:
@@ -114,16 +120,35 @@ function pieceStyle(piece: PuzzlePiece) {
   }
 
   &.selected {
-    position: relative;
     z-index: 2;
-    box-shadow: inset 0 0 0 4px var(--primary);
     filter: brightness(1.12);
     transform: scale(0.94);
+    animation: selected-pulse 900ms ease-in-out infinite;
   }
 
   &.correct:not(.selected) {
     box-shadow: inset 0 0 0 1px
       color-mix(in oklch, var(--background) 50%, transparent);
+  }
+}
+
+.piece-move {
+  z-index: 3;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes selected-pulse {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 0 0 4px var(--color-ring),
+      0 0 0 0 color-mix(in oklch, var(--color-ring) 35%, transparent);
+  }
+
+  50% {
+    box-shadow:
+      inset 0 0 0 4px var(--color-ring),
+      0 0 0 8px color-mix(in oklch, var(--color-ring) 0%, transparent);
   }
 }
 
@@ -164,6 +189,17 @@ function pieceStyle(piece: PuzzlePiece) {
   svg {
     width: 1.4rem;
     height: 1.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .puzzle-piece,
+  .piece-move {
+    transition-duration: 0.01ms;
+  }
+
+  .puzzle-piece.selected {
+    animation: none;
   }
 }
 </style>
