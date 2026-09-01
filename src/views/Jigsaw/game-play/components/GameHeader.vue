@@ -15,10 +15,9 @@ defineEmits<{
 
 <template>
   <header class="game-header">
-    <div>
-      <p class="eyebrow">{{ splitSize }} × {{ splitSize }} 拼图挑战</p>
-      <h1>把画面重新拼完整</h1>
+    <div class="header-tips flex flex-col gap-2">
       <p class="description">依次选择两块拼图进行交换。</p>
+      <p class="eyebrow">{{ splitSize }} × {{ splitSize }} 拼图挑战</p>
     </div>
 
     <div class="header-actions">
@@ -42,13 +41,6 @@ defineEmits<{
   gap: 1.5rem;
   padding-bottom: 1.25rem;
   border-bottom: 1px solid var(--border);
-
-  h1 {
-    margin: 0.25rem 0 0;
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    line-height: 1.1;
-    letter-spacing: 0;
-  }
 }
 
 .eyebrow {
@@ -60,7 +52,6 @@ defineEmits<{
 }
 
 .description {
-  margin: 0.6rem 0 0;
   color: var(--muted-foreground);
   font-size: 0.9rem;
 }
