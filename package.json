@@ -10,6 +10,7 @@
     "format": "prettier --write \"src/**/*.{vue,ts,js,json,css}\""
   },
   "dependencies": {
+    "@tanstack/vue-table": "^8.21.3",
     "@vueuse/core": "^14.4.0",
     "lodash-es": "^4.18.1",
     "pinia": "^4.0.3",
