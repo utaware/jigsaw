@@ -1,11 +1,4 @@
-// 中国传统色类型定义
-export interface TChineseColor {
-  name: string
-  pinyin: string
-  hex: string
-  RGB: [number, number, number]
-  CMYK: [number, number, number, number]
-}
+import type { TChineseColor } from '@/views/ChineseColors/types'
 
 // 中国传统色数据
 export const ChineseColors: Array<TChineseColor> = [
