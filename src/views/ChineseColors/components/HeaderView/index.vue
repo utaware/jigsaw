@@ -2,7 +2,8 @@
 import type { TChineseColor } from '@/views/ChineseColors/types'
 
 const props = defineProps<{
-  data: Array<TChineseColor>
+  totalCount: number
+  currentSelectedColor: TChineseColor
 }>()
 </script>
 
@@ -10,7 +11,7 @@ const props = defineProps<{
   <header class="page-header">
     <p class="eyebrow">Chinese Traditional Colors</p>
     <h1>中国传统色</h1>
-    <p>收录 {{ data.length }} 种颜色及其常用色彩参数。</p>
+    <p>收录 {{ totalCount }} 种颜色及其常用色彩参数。</p>
   </header>
 </template>
 

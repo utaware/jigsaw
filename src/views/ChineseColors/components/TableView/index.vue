@@ -9,7 +9,14 @@ import {
 } from '@tanstack/vue-table'
 import { ChevronLeft, ChevronRight, Search } from 'lucide-vue-next'
 
-import { Button } from '@/components/ui/button'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination'
 import { columns } from './columns'
 
 import type { TChineseColor } from '@/views/ChineseColors/types'
@@ -19,15 +26,15 @@ const props = defineProps<{
   data: TChineseColor[]
 }>()
 
+const emits = defineEmits<{
+  'row-click': [TChineseColor]
+}>()
+
 const globalFilter = ref('')
 
 const table = useVueTable({
-  get data() {
-    return props.data
-  },
-  get columns() {
-    return columns
-  },
+  data: props.data,
+  columns,
   state: {
     get globalFilter() {
       return globalFilter.value
@@ -48,7 +55,10 @@ const table = useVueTable({
 })
 
 const filteredCount = computed(() => table.getFilteredRowModel().rows.length)
-const pageCount = computed(() => table.getPageCount())
+
+const handleRowClick = (row: TChineseColor) => {
+  emits('row-click', row)
+}
 </script>
 
 <template>
@@ -71,7 +81,6 @@ const pageCount = computed(() => table.getPageCount())
           aria-label="搜索中国传统色"
         />
       </label>
-      <p class="text-sm text-muted-foreground">共 {{ filteredCount }} 条</p>
     </div>
 
     <div class="overflow-x-auto rounded-md border border-border bg-card">
@@ -97,18 +106,30 @@ const pageCount = computed(() => table.getPageCount())
         <tbody>
           <tr
             v-for="row in table.getRowModel().rows"
-            :key="row.id"
             class="border-t border-border transition-colors hover:bg-accent/50"
+            :key="row.id"
+            @click="handleRowClick(row.original)"
           >
             <td
               v-for="cell in row.getVisibleCells()"
               :key="cell.id"
               class="px-4 py-3"
             >
-              <FlexRender
-                :render="cell.column.columnDef.cell"
-                :props="cell.getContext()"
-              />
+              <slot
+                :name="`cell-${cell.column.id}`"
+                :row="cell.row.original"
+                :cell="cell"
+                :value="cell.getValue()"
+              >
+                <FlexRender
+                  v-if="cell.column.columnDef.cell"
+                  :render="cell.column.columnDef.cell"
+                  :props="cell.getContext()"
+                />
+                <span v-else class="text-muted-foreground">{{
+                  cell.getValue()
+                }}</span>
+              </slot>
             </td>
           </tr>
           <tr v-if="!table.getRowModel().rows.length">
@@ -122,35 +143,38 @@ const pageCount = computed(() => table.getPageCount())
         </tbody>
       </table>
     </div>
-
-    <div class="flex items-center justify-between gap-3">
-      <p class="text-sm text-muted-foreground">
-        第 {{ table.getState().pagination.pageIndex + 1 }} / {{ pageCount }} 页
-      </p>
-      <div class="flex gap-2">
-        <Button
-          variant="outline"
-          size="icon"
-          type="button"
-          :disabled="!table.getCanPreviousPage()"
-          title="上一页"
-          aria-label="上一页"
-          @click="table.previousPage()"
-        >
-          <ChevronLeft />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          type="button"
-          :disabled="!table.getCanNextPage()"
-          title="下一页"
-          aria-label="下一页"
-          @click="table.nextPage()"
-        >
-          <ChevronRight />
-        </Button>
-      </div>
-    </div>
+    <!-- 分页 -->
+    <Pagination
+      v-slot="{ page }"
+      :page="table.getState().pagination.pageIndex + 1"
+      :total="filteredCount"
+      :items-per-page="10"
+      :sibling-count="1"
+      show-edges
+      class="justify-between"
+      @update:page="table.setPageIndex($event - 1)"
+    >
+      <p class="text-sm text-muted-foreground">共 {{ filteredCount }} 条</p>
+      <PaginationContent v-slot="{ items }">
+        <!-- 上一页 -->
+        <PaginationPrevious aria-label="上一页" title="上一页">
+          <ChevronLeft class="size-4" />
+        </PaginationPrevious>
+        <template v-for="(item, index) in items" :key="index">
+          <PaginationItem
+            v-if="item.type === 'page'"
+            :value="item.value"
+            :is-active="item.value === page"
+          >
+            {{ item.value }}
+          </PaginationItem>
+          <PaginationEllipsis v-else />
+        </template>
+        <!-- 下一页 -->
+        <PaginationNext aria-label="下一页" title="下一页">
+          <ChevronRight class="size-4" />
+        </PaginationNext>
+      </PaginationContent>
+    </Pagination>
   </div>
 </template>
