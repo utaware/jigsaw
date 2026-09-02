@@ -4,6 +4,7 @@ export const routes = [
     name: 'home',
     component: () => import('@/views/Home/index.vue'),
   },
+  // 参考：https://pintu.lingwulab.com/
   {
     path: '/jigsaw',
     name: 'jigsaw',
@@ -20,5 +21,11 @@ export const routes = [
         component: () => import('@/views/Jigsaw/game-play/index.vue'),
       },
     ],
+  },
+  // 参考：https://zhongguose.lingwulab.com/
+  {
+    path: '/chinese-colors',
+    name: 'chinese-colors',
+    component: () => import('@/views/ChineseColors/index.vue'),
   },
 ]

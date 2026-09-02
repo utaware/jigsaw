@@ -3,6 +3,12 @@ import { RouterLink } from 'vue-router'
 
 import CommonLogo from '@/components/common/Logo/index.vue'
 import ThemeSwitch from '@/components/layout/ThemeSwitch/index.vue'
+
+const navList = [
+  { label: '首页', path: '/' },
+  { label: '拼图', path: '/jigsaw' },
+  { label: '中国色', path: '/chinese-colors' },
+]
 </script>
 
 <template>
@@ -18,18 +24,13 @@ import ThemeSwitch from '@/components/layout/ThemeSwitch/index.vue'
         <!-- 导航项（可选） -->
         <nav class="flex items-center gap-4 text-sm font-medium">
           <RouterLink
-            to="/"
+            v-for="nav in navList"
+            :key="nav.path"
+            :to="nav.path"
             class="text-muted-foreground transition-colors hover:text-foreground"
             active-class="!text-foreground font-semibold"
           >
-            首页
-          </RouterLink>
-          <RouterLink
-            to="/jigsaw"
-            class="text-muted-foreground transition-colors hover:text-foreground"
-            active-class="!text-foreground font-semibold"
-          >
-            拼图
+            {{ nav.label }}
           </RouterLink>
         </nav>
       </div>
