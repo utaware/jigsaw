@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import CMYKView from './CMYK.vue'
+
+import Typography from '@/components/common/Typography/index.vue'
+
 import type { TChineseColor } from '@/views/ChineseColors/types'
 
 const props = defineProps<{
@@ -8,34 +12,21 @@ const props = defineProps<{
 </script>
 
 <template>
-  <header class="page-header">
-    <p class="eyebrow">Chinese Traditional Colors</p>
-    <h1>中国传统色</h1>
-    <p>收录 {{ totalCount }} 种颜色及其常用色彩参数。</p>
+  <header class="flex justify-between items-center">
+    <div class="flex flex-col gap-2">
+      <Typography tag="p" class="eyebrow"
+        >Chinese Traditional Colors</Typography
+      >
+      <Typography tag="h1">中国传统色</Typography>
+      <Typography tag="p"
+        >收录 {{ totalCount }} 种颜色及其常用色彩参数。</Typography
+      >
+    </div>
+    <CMYKView :colors="currentSelectedColor" />
   </header>
 </template>
 
 <style scoped>
-.page-header {
-  margin-bottom: 2rem;
-
-  h1,
-  p {
-    margin: 0;
-  }
-
-  h1 {
-    margin-top: 0.35rem;
-    font-size: 2rem;
-    line-height: 1.2;
-  }
-
-  > p:last-child {
-    margin-top: 0.6rem;
-    color: var(--muted-foreground);
-  }
-}
-
 .eyebrow {
   color: var(--muted-foreground);
   font-size: 0.75rem;

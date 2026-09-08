@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Typography from '@/components/common/Typography/index.vue'
+
 const props = defineProps<{
   label?: string
 }>()
@@ -6,7 +8,7 @@ const props = defineProps<{
 
 <template>
   <div class="circle-progress-label text-base">
-    {{ label }}
+    <Typography tag="span">{{ label }}</Typography>
   </div>
 </template>
 

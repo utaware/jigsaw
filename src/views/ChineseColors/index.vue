@@ -20,7 +20,7 @@ const handleRowClick = (row: TChineseColor) => {
 </script>
 
 <template>
-  <main class="chinese-colors">
+  <main class="chinese-colors flex flex-col gap-4">
     <!-- Header section -->
     <HeaderView
       :total-count="ChineseColors.length"
