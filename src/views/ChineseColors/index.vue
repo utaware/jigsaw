@@ -3,6 +3,8 @@ import { ref } from 'vue'
 
 import { ChineseColors } from '@/views/ChineseColors/data/colors'
 
+import ClipPasteText from '@/components/common/ClipPasteText/index.vue'
+
 import TableView from './components/TableView/index.vue'
 import HeaderView from './components/HeaderView/index.vue'
 
@@ -33,6 +35,18 @@ const handleRowClick = (row: TChineseColor) => {
           :style="{ backgroundColor: row.hex }"
           :title="row.hex"
         />
+      </template>
+      <!-- RGB column -->
+      <template #cell-RGB="{ row }">
+        <ClipPasteText :text="row.RGB.join(',')">
+          <span class="text-muted-foreground">{{ row.RGB.join(',') }}</span>
+        </ClipPasteText>
+      </template>
+      <!-- HEX column -->
+      <template #cell-hex="{ row }">
+        <ClipPasteText :text="row.hex">
+          <span class="text-muted-foreground">{{ row.hex }}</span>
+        </ClipPasteText>
       </template>
     </TableView>
   </main>
